@@ -1,0 +1,27 @@
+# Materials that must NOT appear in the ‘choose material’ menu when
+# creating an order. Use the material’s vanilla name (e.g. BEDROCK).
+#
+# You can also use “*” as a wildcard to block entire families of
+# materials in a single line, e.g.:
+#   *_SPAWN_EGG                 -> blocks all spawn eggs
+#   POTTED_*                    -> blocks all pots with plants
+#   *_MUSIC_DISC                -> blocks all music discs
+#   LINGERING_POTION:*          -> blocks all lingering potion
+#   POTION:STRENGTH             -> blocks strength potion
+#   ENCHANTED_BOOK:SHARPNESS:5   -> blocks only the level 5 sharpness book
+blacklisted-materials:
+  - "BEDROCK"
+  - "AIR"
+  - "COMMAND_BLOCK"
+  - "CHAIN_COMMAND_BLOCK"
+  - "COMMAND_BLOCK_MINECART"
+  - "BARRIER"
+  - "STRUCTURE_BLOCK"
+  - "STRUCTURE_VOID"
+  - "JIGSAW"
+  - "DEBUG_STICK"
+  - "KNOWLEDGE_BOOK"
+  - "SPAWNER"
+  - "END_PORTAL_FRAME"
+  - "LIGHT"
+  - "*_SPAWN_EGG"

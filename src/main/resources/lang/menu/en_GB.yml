@@ -1,0 +1,224 @@
+dialog:
+  generic:
+    confirm: "&aConfirm"
+    cancel: "&cCancel"
+
+paginated-menu:
+  next-page-button:
+    name: "#FF8FB1ɴᴇxᴛ"
+    lore:
+      - "&7Click to go to the next page"
+
+  prev-page-button:
+    name: "#FF8FB1ʙᴀᴄᴋ"
+    lore:
+      - "&7Click to go to the previous page"
+
+  search-button:
+    name: "#FF8FB1ꜱᴇᴀʀᴄʜ"
+    lore:
+      - "&7Click to search"
+    dialog-title: "#FF8FB1ꜱᴇᴀʀᴄʜ"
+    dialog-prompt: "&7Search"
+
+  sort-button:
+    name: "#FF8FB1ꜱᴏʀᴛ"
+    selected-color: "#FF8FB1"
+    unselected-color: "&7"
+    recently_listed: "ʀᴇᴄᴇɴᴛʟʏ ʟɪꜱᴛᴇᴅ"
+    most_delivered: "ᴍᴏꜱᴛ ᴅᴇʟɪᴠᴇʀᴇᴅ"
+    most_paid: "ᴍᴏꜱᴛ ᴘᴀɪᴅ"
+    highest_price_per_item: "ʜɪɢʜᴇꜱᴛ ᴘʀɪᴄᴇ ᴘᴇʀ ɪᴛᴇᴍ"
+    a_to_z: "ᴀ ➜ ᴢ"
+    z_to_a: "ᴢ ➜ ᴀ"
+
+  filter-button:
+    name: "#FF8FB1ꜰɪʟᴛᴇʀ"
+    selected-color: "#FF8FB1"
+    unselected-color: "&7"
+    all: "ᴀʟʟ"
+    block: "ʙʟᴏᴄᴋ"
+    tools: "ᴛᴏᴏʟꜱ"
+    food: "ꜰᴏᴏᴅ"
+    combat: "ᴄᴏᴍʙᴀᴛ"
+    potions: "ᴘᴏᴛɪᴏɴꜱ"
+    books: "ʙᴏᴏᴋꜱ"
+    miscellaneous: "ᴍɪꜱᴄᴇʟʟᴀɴᴇᴏᴜꜱ"
+
+admin-panel-menu:
+  title: "#FF8FB1ᴀᴅᴍɪɴ -> ᴄᴏɴᴛʀᴏʟ ᴘᴀɴᴇʟ"
+
+  reload-button:
+    name: "#FF8FB1ʀᴇʟᴏᴀᴅ"
+    lore:
+      - "&7Click to reload the config"
+
+  lock-button:
+    name: "#FF8FB1ʟᴏᴄᴋ ᴏʀᴅᴇʀ"
+    lore:
+      - "&7Click to toggle orders services"
+
+order-menu:
+  title: "#FF8FB1ᴏʀᴅᴇʀꜱ ({current_page}/{total_pages})"
+  order-not-available: "&cOrder not available"
+
+  order-button:
+    name: "#FF8FB1{buyer_name}'s ᴏʀᴅᴇʀ"
+    lore:
+      - "#FF8FB1{item_amount} &f{item_name}"
+      - "#FF8FB1${price_each} &feach"
+      - ""
+      - "#FF8FB1{delivered}/#8E3A59{item_amount} #FF8FB1Delivered"
+      - "#FF8FB1{paid}/#8E3A59{total_price} #FF8FB1Paid"
+      - ""
+      - "#FF8FB1Expires in #8E3A59{time_left}"
+    lore-admin: "&cShift + Click to delete the order"
+
+  your-orders-button:
+    name: "#FF8FB1ʏᴏᴜʀ ᴏʀᴅᴇʀꜱ"
+    lore:
+      - "&7Click to view your orders"
+
+  refresh-button:
+    name: "#FF8FB1ᴏʀᴅᴇʀꜱ"
+    lore:
+      - "&7Click to refresh"
+
+your-orders-menu:
+  title: "#FF8FB1ᴏʀᴅᴇʀꜱ -> ʏᴏᴜʀ ᴏʀᴅᴇʀꜱ"
+
+  create-order-button:
+    name: "#FF8FB1ᴄʀᴇᴀᴛᴇ ᴏʀᴅᴇʀ"
+    lore:
+      - "&7Click to create a new order"
+    name-limit: "&cᴏʀᴅᴇʀ ʟɪᴍɪᴛ"
+    lore-limit:
+      - "&7You have reached the maximum number of orders"
+
+player-order-history-menu:
+  title: "#FF8FB1{player_name}'ꜱ ᴏʀᴅᴇʀ ʜɪꜱᴛᴏʀʏ ({current_page}/{total_pages})"
+
+  order-button:
+    name: "#FF8FB1{item_amount} {item_name}"
+    lore:
+      - "#FF8FB1${price_each} &feach"
+      - "#FF8FB1{delivered}/#8E3A59{item_amount} #FF8FB1Delivered"
+      - "#FF8FB1{collected}/#8E3A59{item_amount} #FF8FB1Collected"
+      - " "
+      - "#FF8FB1Status #8E3A59{status}"
+
+new-order-menu:
+  title: "#FF8FB1ʏᴏᴜʀ ᴏʀᴅᴇʀꜱ -> ɴᴇᴡ ᴏʀᴅᴇʀ"
+  not-set: "&7Not set"
+
+  cancel-button:
+    name: "&cᴄᴀɴᴄᴇʟ"
+    lore:
+      - "&7Click to go back"
+
+  confirm-button:
+    name: "&aᴄᴏɴꜰɪʀᴍ"
+    lore:
+      - "&7Click to create the order"
+      - "&7(${total_price})"
+
+  price-button:
+    name: "#FF8FB1ᴘʀɪᴄᴇ"
+    lore:
+      - "&7Click to set the price"
+      - "&7(${price})"
+    dialog-title: "#FF8FB1ꜱᴇᴛ ᴘʀɪᴄᴇ"
+    dialog-prompt: "&7Price Per Item"
+    invalid: "&cɪɴᴘᴜᴛ ɴᴏᴛ ᴠᴀʟɪᴅ"
+    must-be-positive: "&cᴍᴜꜱᴛ ʙᴇ ᴘᴏꜱɪᴛɪᴠᴇ"
+
+  amount-button:
+    name: "#FF8FB1ᴀᴍᴏᴜɴᴛ"
+    lore:
+      - "&7Click to set the amount"
+      - "&7({amount})"
+    dialog-title: "#FF8FB1ꜱᴇᴛ ᴀᴍᴏᴜɴᴛ"
+    dialog-prompt: "&7Amount"
+    invalid: "&cɪɴᴘᴜᴛ ɴᴏᴛ ᴠᴀʟɪᴅ"
+    too-large: "&cɴᴜᴍʙᴇʀ ᴛᴏᴏ ʟᴀʀɢᴇ"
+    must-be-positive: "&cᴍᴜꜱᴛ ʙᴇ ᴘᴏꜱɪᴛɪᴠᴇ"
+
+  material-button:
+    name: "#FF8FB1ᴍᴀᴛᴇʀɪᴀʟ"
+    lore:
+      - "&7Click to select an item"
+      - "&7({material})"
+
+delivery-deposit-menu:
+  title: "#FF8FB1ᴏʀᴅᴇʀꜱ -> ᴅᴇʟɪᴠᴇʀʏ ɪᴛᴇᴍ"
+
+delivery-confirm-menu:
+  title: "#FF8FB1ᴅᴇʟɪᴠᴇʀʏ ɪᴛᴇᴍ -> ᴄᴏɴꜰɪʀᴍ"
+
+  info-button:
+    name: "#FF8FB1{buyer_name}'s ᴏʀᴅᴇʀ"
+    lore:
+      - "#FF8FB1{item_amount} &f{item_name}"
+      - "#FF8FB1${price_each} &feach"
+
+  cancel-button:
+    name: "&cᴄᴀɴᴄᴇʟ"
+    lore:
+      - "&7Click to go back"
+
+  confirm-button:
+    name: "&aᴄᴏɴꜰɪʀᴍ"
+    lore:
+      - "&7(${earned})"
+
+material-select-menu:
+  title: "#FF8FB1ɴᴇᴡ ᴏʀᴅᴇʀ -> ꜱᴇʟᴇᴄᴛ ᴍᴀᴛᴇʀɪᴀʟ ({current_page}/{total_pages})"
+
+  item-button:
+    name: "#FF8FB1{material}"
+    lore:
+      - "&7Click to select"
+
+enchant-select-menu:
+  title: "#FF8FB1ᴘɪᴄᴋ ᴇɴᴄʜᴀɴᴛᴍᴇɴᴛꜱ"
+
+  cancel-button:
+    name: "&cᴄᴀɴᴄᴇʟ"
+    lore:
+      - " "
+
+  confirm-button:
+    name: "&aᴄᴏɴꜰɪʀᴍ"
+    lore:
+      - " "
+
+  entry:
+    name: "#FF8FB1{enchant}"
+    selected-name: "&a{enchant}"
+    lore:
+      - "&7Click to select"
+    lore-selected:
+      - "&aꜱᴇʟᴇᴄᴛᴇᴅ"
+      - "&7Click to remove"
+    not-applicable: "&cɴᴏᴛ ᴀᴘᴘʟɪᴄᴀʙʟᴇ"
+
+edit-order-menu:
+  title: "#FF8FB1ʏᴏᴜʀ ᴏʀᴅᴇʀ -> ᴇᴅɪᴛ ᴏʀᴅᴇʀ"
+
+  cancel-button:
+    name: "&cᴄᴀɴᴄᴇʟ"
+    lore:
+      - "&fClick to cancel"
+
+  collect-button:
+    name: "#FF8FB1ᴄᴏʟʟᴇᴄᴛ"
+    lore:
+      - "&fClick to collect"
+
+collect-menu:
+  title: "#FF8FB1ᴄᴏʟʟᴇᴄᴛ ɪᴛᴇᴍ ({current_page}/{total_pages})"
+
+  drop-all-button:
+    name: "&cᴅʀᴏᴘ ᴀʟʟ"
+    lore:
+      - "&fClick to drop the page"

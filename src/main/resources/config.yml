@@ -1,0 +1,43 @@
+# ==========================================================
+#                  SakuraOrder Configuration
+# ==========================================================
+
+settings:
+  broadcast-creation: true
+  order-expiration-days: 7
+  claim-grace-days: 90 # Days granted to the buyer to claim items/funds for a fulfilled order before it is finalized
+  order-max-item-amount: 1T # Type supported K, M, B, T, Q
+  language: en_GB # Supported languages: it_IT, en_GB
+  fallback-language: en_GB
+
+# ==========================================================
+#                   Database Settings
+# ==========================================================
+database:
+  # Supported types: SQLITE, MYSQL, MARIADB
+  type: SQLITE
+
+  # Common prefix for database tables
+  table-prefix: "sakura_"
+
+  # Settings for MySQL / MariaDB
+  mysql:
+    host: "localhost"
+    port: 3306
+    database: "sakura_orders"
+    username: "root"
+    password: "password"
+    ssl: false
+
+  # Settings for SQLite
+  sqlite:
+    file-name: "orders.db"
+
+  # HikariCP Connection Pool (Ignored when using SQLite)
+  pool:
+    maximum-pool-size: 10
+    minimum-idle: 2
+    connection-timeout-ms: 30000
+    idle-timeout-ms: 600000
+    max-lifetime-ms: 1800000
+    leak-detection-threshold-ms: 10000

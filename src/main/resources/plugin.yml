@@ -1,0 +1,16 @@
+name: SakuraOrder
+version: '${version}'
+authors:
+  - NotCryy_
+website: https://github.com/eskerechris/SakuraOrder
+main: me.chris.sakuraOrder.SakuraOrder
+api-version: '1.21'
+folia-supported: true
+load: POSTWORLD
+softdepend: [Vault]
+
+libraries:
+  - com.zaxxer:HikariCP:${hikariVersion}
+  - org.xerial:sqlite-jdbc:${sqliteVersion}
+  - com.mysql:mysql-connector-j:${mysqlVersion}
+  - org.mariadb.jdbc:mariadb-java-client:${mariadbVersion}
