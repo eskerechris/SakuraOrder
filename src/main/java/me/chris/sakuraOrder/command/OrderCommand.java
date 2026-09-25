@@ -1,5 +1,6 @@
 package me.chris.sakuraOrder.command;
 
+import com.mojang.brigadier.arguments.StringArgumentType;
 import me.chris.sakuraOrder.api.OrderPlugin;
 import me.chris.sakuraOrder.command.sub.*;
 import me.chris.sakuraOrder.command.sub.*;
@@ -42,7 +43,19 @@ public final class OrderCommand {
                         );
                     }
                     return 1;
-                });
+                })
+                .then(Commands.argument("search", StringArgumentType.greedyString())
+                        .executes(context -> {
+                            if (context.getSource().getSender() instanceof Player player) {
+                                String search = StringArgumentType.getString(context, "search");
+                                new OrderMenu(plugin, search).displayTo(player);
+                            } else {
+                                context.getSource().getSender().sendMessage(
+                                        Component.text("This command can only be executed by players.", NamedTextColor.RED)
+                                );
+                            }
+                            return 1;
+                        }));
 
         subCommands.forEach(sub -> root.then(sub.build()));
 

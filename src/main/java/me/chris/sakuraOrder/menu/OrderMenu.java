@@ -50,6 +50,15 @@ public class OrderMenu extends PaginatedMenu<IOrder> implements TickableMenu {
         setSize(9 * 6);
     }
 
+    public OrderMenu(@NotNull OrderPlugin plugin, @NotNull String initialSearch) {
+        super(plugin);
+        this.currentSearch = initialSearch;
+        setTitle(lang.menuMessage("order-menu.title",
+                Map.of("current_page", String.valueOf(getCurrentPage() + 1),
+                        "total_pages", String.valueOf(getTotalPages()))));
+        setSize(9 * 6);
+    }
+
     @Override
     protected int getTotalItemCount() {
         return getPlugin().getOrderCacheService().getActiveCount(currentFilter, currentSearch);
