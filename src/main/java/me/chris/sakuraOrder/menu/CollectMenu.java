@@ -95,9 +95,12 @@ public class CollectMenu extends PaginatedMenu<Integer> {
             @NotNull
             protected ItemStack createItem() {
                 IOrder order = getPlugin().getOrderCacheService().get(orderId);
-                Material material = order != null ? order.getItemStack().getType() : Material.BARRIER;
-
-                return new ItemStack(material, amount);
+                if (order == null) {
+                    return new ItemStack(Material.BARRIER);
+                }
+                ItemStack display = order.getItemStack().clone();
+                display.setAmount(amount);
+                return display;
             }
 
             @Override

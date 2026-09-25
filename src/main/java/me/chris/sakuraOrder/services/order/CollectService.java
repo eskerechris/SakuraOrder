@@ -12,7 +12,6 @@ import me.chris.sakuraOrder.util.NumberParser;
 import me.chris.sakuraOrder.util.OrderMaintenanceLock;
 import me.chris.sakuraOrder.util.StringUtil;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -84,7 +83,7 @@ public class CollectService implements OrderCollectService {
 
         IOrder updatedOrder = allocation.order();
 
-        List<ItemStack> stacks = splitIntoStacks(updatedOrder.getItemStack().getType(), collectedNow);
+        List<ItemStack> stacks = splitIntoStacks(updatedOrder.getItemStack(), collectedNow);
         giveOrDrop(collector, stacks, mode);
 
         Map<String, String> placeholders = Map.of(
@@ -136,13 +135,15 @@ public class CollectService implements OrderCollectService {
         }
     }
 
-    private List<ItemStack> splitIntoStacks(@NotNull Material material, int amount) {
+    private List<ItemStack> splitIntoStacks(@NotNull ItemStack template, int amount) {
         List<ItemStack> stacks = new ArrayList<>();
         int remaining = amount;
-        int maxStack = material.getMaxStackSize();
+        int maxStack = template.getType().getMaxStackSize();
         while (remaining > 0) {
             int chunk = Math.min(remaining, maxStack);
-            stacks.add(new ItemStack(material, chunk));
+            ItemStack stack = template.clone();
+            stack.setAmount(chunk);
+            stacks.add(stack);
             remaining -= chunk;
         }
         return stacks;
