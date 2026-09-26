@@ -1,6 +1,7 @@
 package me.chris.sakuraOrder.menu.components;
 
 import me.chris.sakuraOrder.api.OrderPlugin;
+import me.chris.sakuraOrder.api.model.SakuraSound;
 import me.chris.sakuraOrder.menu.framework.Button;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -119,5 +120,6 @@ public class SortButton<E extends Enum<E>> extends Button {
                 ? (current.ordinal() - 1 + values.length) % values.length
                 : (current.ordinal() + 1) % values.length;
         onSortChanged.accept(values[newIndex]);
+        plugin.getSoundService().play(player, SakuraSound.BUTTON_INTERACT);
     }
 }

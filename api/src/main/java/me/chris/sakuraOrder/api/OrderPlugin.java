@@ -8,6 +8,7 @@ import me.chris.sakuraOrder.api.services.gui.GuiService;
 import me.chris.sakuraOrder.api.services.lang.LangService;
 import me.chris.sakuraOrder.api.services.material.MaterialBlacklistService;
 import me.chris.sakuraOrder.api.services.order.*;
+import me.chris.sakuraOrder.api.services.sound.SoundService;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
@@ -129,4 +130,12 @@ public interface OrderPlugin extends Plugin {
      */
     @NotNull
     DialogService getDialogService();
+
+    /**
+     * Gets the service responsible for playing sound to player.
+     *
+     * @return the active {@link SoundService} instance
+     */
+    @NotNull
+    SoundService getSoundService();
 }

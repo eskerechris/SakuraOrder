@@ -1,6 +1,7 @@
 package me.chris.sakuraOrder.menu.components;
 
 import me.chris.sakuraOrder.api.OrderPlugin;
+import me.chris.sakuraOrder.api.model.SakuraSound;
 import me.chris.sakuraOrder.menu.CollectMenu;
 import me.chris.sakuraOrder.menu.framework.Button;
 import org.bukkit.Material;
@@ -45,5 +46,6 @@ public class CollectButton extends Button {
         }
 
         new CollectMenu(plugin, orderId).displayTo(player);
+        plugin.getSoundService().play(player, SakuraSound.BUTTON_INTERACT);
     }
 }

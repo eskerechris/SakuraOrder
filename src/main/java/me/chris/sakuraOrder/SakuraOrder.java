@@ -4,6 +4,7 @@ import me.chris.sakuraOrder.api.OrderPlugin;
 import me.chris.sakuraOrder.api.services.dialog.DialogService;
 import me.chris.sakuraOrder.api.services.economy.EconomyService;
 import me.chris.sakuraOrder.api.services.material.MaterialBlacklistService;
+import me.chris.sakuraOrder.api.services.sound.SoundService;
 import me.chris.sakuraOrder.menu.framework.Menu;
 import me.chris.sakuraOrder.menu.framework.MenuListener;
 import me.chris.sakuraOrder.api.persistence.OrderRepository;
@@ -22,6 +23,7 @@ import me.chris.sakuraOrder.services.material.BlacklistService;
 import me.chris.sakuraOrder.services.order.*;
 import me.chris.sakuraOrder.services.order.*;
 import me.chris.sakuraOrder.services.scheduler.SchedulerService;
+import me.chris.sakuraOrder.services.sound.PluginSoundService;
 import me.chris.sakuraOrder.util.StartupBanner;
 import com.tcoded.folialib.FoliaLib;
 import com.tcoded.folialib.wrapper.task.WrappedTask;
@@ -68,6 +70,7 @@ public final class SakuraOrder extends JavaPlugin implements OrderPlugin {
     private OrderExpirationService orderExpirationService;
     private OrderHistoryService orderHistoryService;
     private DialogService dialogService;
+    private SoundService soundService;
 
     private final AtomicBoolean shuttingDown = new AtomicBoolean(false);
     private final AtomicReference<CompletableFuture<Integer>> activeArchiveTask = new AtomicReference<>(CompletableFuture.completedFuture(0));
@@ -120,6 +123,7 @@ public final class SakuraOrder extends JavaPlugin implements OrderPlugin {
         this.orderHistoryService = new HistoryService(this, orderCacheService);
         this.orderHistoryService.start();
         this.dialogService = OrderDialogServiceFactory.create(this);
+        this.soundService = new PluginSoundService(this, schedulerService);
 
         // Archive terminal orders task
         archiveCompletedOrdersTaskHandle = this.schedulerService.runTimerAsync(
@@ -248,6 +252,7 @@ public final class SakuraOrder extends JavaPlugin implements OrderPlugin {
         // a config change to the database section still requires a full restart.
         settingsService.reload();
         materialBlacklistService.reload();
+        soundService.reload();
         langService.reload();
     }
 
@@ -318,6 +323,11 @@ public final class SakuraOrder extends JavaPlugin implements OrderPlugin {
     @Override
     public @NotNull DialogService getDialogService() {
         return dialogService;
+    }
+
+    @Override
+    public @NotNull SoundService getSoundService() {
+        return soundService;
     }
 
     public static SakuraOrder getInstance() {

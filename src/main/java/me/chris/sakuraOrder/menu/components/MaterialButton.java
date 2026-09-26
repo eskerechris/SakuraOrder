@@ -2,6 +2,7 @@ package me.chris.sakuraOrder.menu.components;
 
 import me.chris.sakuraOrder.api.OrderPlugin;
 import me.chris.sakuraOrder.api.model.OrderableItem;
+import me.chris.sakuraOrder.api.model.SakuraSound;
 import me.chris.sakuraOrder.api.services.lang.LangService;
 import me.chris.sakuraOrder.menu.MaterialSelectMenu;
 import me.chris.sakuraOrder.menu.framework.Button;
@@ -52,5 +53,6 @@ public class MaterialButton extends Button {
     @Override
     public void onClick(@NotNull Player player, @NotNull ClickType clickType) {
         new MaterialSelectMenu(plugin, onItemSet).displayTo(player);
+        plugin.getSoundService().play(player, SakuraSound.BUTTON_INTERACT);
     }
 }

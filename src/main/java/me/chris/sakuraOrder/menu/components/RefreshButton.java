@@ -1,6 +1,7 @@
 package me.chris.sakuraOrder.menu.components;
 
 import me.chris.sakuraOrder.api.OrderPlugin;
+import me.chris.sakuraOrder.api.model.SakuraSound;
 import me.chris.sakuraOrder.menu.framework.Button;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -35,5 +36,6 @@ public class RefreshButton extends Button {
     @Override
     public void onClick(@NotNull Player player, @NotNull ClickType clickType) {
         onRefresh.run();
+        plugin.getSoundService().play(player, SakuraSound.BUTTON_INTERACT);
     }
 }

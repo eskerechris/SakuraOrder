@@ -5,6 +5,7 @@ import me.chris.sakuraOrder.api.OrderPlugin;
 import me.chris.sakuraOrder.api.event.create.OrderCreateEvent;
 import me.chris.sakuraOrder.api.event.create.OrderPreCreateEvent;
 import me.chris.sakuraOrder.api.model.IOrder;
+import me.chris.sakuraOrder.api.model.SakuraSound;
 import me.chris.sakuraOrder.api.services.economy.EconomyService;
 import me.chris.sakuraOrder.api.services.economy.result.EconomyResult;
 import me.chris.sakuraOrder.api.services.lang.LangService;
@@ -155,6 +156,12 @@ public class CreateService implements OrderCreateService {
                                         "price_each", NumberParser.formatNumber(order.getPricePerItem())
                                 )));
                     }
+
+                    Player player = Bukkit.getPlayer(order.getBuyerId());
+                    if (player != null) {
+                        plugin.getSoundService().play(player, SakuraSound.ORDER_CREATE);
+                    }
+
                     postEventFuture.complete(createdResult);
                 });
 

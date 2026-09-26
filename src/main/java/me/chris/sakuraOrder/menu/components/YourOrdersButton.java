@@ -1,6 +1,7 @@
 package me.chris.sakuraOrder.menu.components;
 
 import me.chris.sakuraOrder.api.OrderPlugin;
+import me.chris.sakuraOrder.api.model.SakuraSound;
 import me.chris.sakuraOrder.menu.YourOrdersMenu;
 import me.chris.sakuraOrder.menu.framework.Button;
 import org.bukkit.Material;
@@ -35,5 +36,6 @@ public class YourOrdersButton extends Button {
     @Override
     public void onClick(@NotNull Player player, @NotNull ClickType clickType) {
         new YourOrdersMenu(plugin).displayTo(player);
+        plugin.getSoundService().play(player, SakuraSound.BUTTON_INTERACT);
     }
 }

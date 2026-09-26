@@ -2,6 +2,7 @@ package me.chris.sakuraOrder.menu.components;
 
 import me.chris.sakuraOrder.SakuraOrder;
 import me.chris.sakuraOrder.api.OrderPlugin;
+import me.chris.sakuraOrder.api.model.SakuraSound;
 import me.chris.sakuraOrder.api.model.TextInputRequest;
 import me.chris.sakuraOrder.api.services.lang.LangService;
 import me.chris.sakuraOrder.menu.framework.Button;
@@ -92,5 +93,6 @@ public class AmountButton extends Button {
     @Override
     public void onClick(@NotNull Player player, @NotNull ClickType clickType) {
         openDialog(player);
+        plugin.getSoundService().play(player, SakuraSound.BUTTON_INTERACT);
     }
 }

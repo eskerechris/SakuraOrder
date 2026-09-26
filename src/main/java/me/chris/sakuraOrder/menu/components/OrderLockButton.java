@@ -1,6 +1,7 @@
 package me.chris.sakuraOrder.menu.components;
 
 import me.chris.sakuraOrder.api.OrderPlugin;
+import me.chris.sakuraOrder.api.model.SakuraSound;
 import me.chris.sakuraOrder.menu.framework.Button;
 import me.chris.sakuraOrder.util.OrderMaintenanceLock;
 import net.kyori.adventure.text.Component;
@@ -53,5 +54,6 @@ public class OrderLockButton extends Button {
             OrderMaintenanceLock.lock();
             player.sendMessage(Component.text("Order services have been locked", NamedTextColor.GREEN));
         }
+        plugin.getSoundService().play(player, SakuraSound.BUTTON_INTERACT);
     }
 }

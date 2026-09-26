@@ -1,0 +1,17 @@
+# Sound configuration.
+#
+# Each sound can be enabled or disabled independently.
+# Use Minecraft sound names for the selected sound effect.
+
+page-change:
+  enabled: true
+  sound: item.book.page_turn
+button-interact:
+  enabled: true
+  sound: ui.button.click
+order-create:
+  enabled: true
+  sound: entity.experience_orb.pickup
+order-cancel:
+  enabled: true
+  sound: entity.villager.no

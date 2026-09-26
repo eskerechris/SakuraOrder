@@ -1,6 +1,7 @@
 package me.chris.sakuraOrder.menu.components;
 
 import me.chris.sakuraOrder.api.OrderPlugin;
+import me.chris.sakuraOrder.api.model.SakuraSound;
 import me.chris.sakuraOrder.menu.framework.Button;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -43,5 +44,6 @@ public class ReloadConfigButton extends Button {
 
         player.sendMessage(Component.text("SakuraOrder configuration reloaded successfully in %dms".formatted(end - start),
                 NamedTextColor.GREEN));
+        plugin.getSoundService().play(player, SakuraSound.BUTTON_INTERACT);
     }
 }
