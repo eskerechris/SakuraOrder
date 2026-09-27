@@ -146,6 +146,20 @@ public abstract class Menu implements InventoryHolder {
         reopening = false;
     }
 
+    /**
+     * Marks this menu as temporarily closed
+     */
+    public final void suspend() {
+        reopening = true;
+    }
+
+    /**
+     * Ends a previous {@link #suspend()}, restoring normal close handling.
+     */
+    public final void resume() {
+        reopening = false;
+    }
+
     public void onClose(@NotNull Player player) {
         if (reopening) {
             return; // ignore close events triggered by reopening the inventory
