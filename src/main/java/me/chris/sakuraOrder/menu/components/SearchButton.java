@@ -38,8 +38,10 @@ public class SearchButton extends Button {
                         player,
                         () -> onSearch.accept(query)
                 ),
-                () -> {
-                }
+                () -> SakuraOrder.getInstance().getSchedulerService().runAtEntity(
+                        player,
+                        () -> onSearch.accept("")
+                )
         ));
     }
 
