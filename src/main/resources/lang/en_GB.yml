@@ -17,3 +17,8 @@ order:
   collected: "&aYou collected {amount}x {item_name}"
   expired-refund: "&cYour order has expired! Refunded ${refund}"
   locked: "&cOrders are currently under maintenance"
+
+dialog:
+  hint: "&d{prompt} &7| type in chat, or &c{cancel}&7 to cancel"
+  too-long: "&cText too long (max {max} characters)"
+  cancel-keyword: "cancel"

@@ -28,11 +28,11 @@ public final class OrderDialogServiceFactory {
                     "me.chris.sakuraOrder.services.dialog.PaperDialogService"
             ).getDeclaredConstructor(OrderPlugin.class).newInstance(plugin);
         } catch (ClassNotFoundException e) {
-            // TODO: Fallback to legacy Bukkit dialog
-            plugin.getLogger().severe("Paper Dialog API is unavailable on this server platform.");
-            throw new IllegalStateException("Paper Dialog API is not available on this server version", e);
+            plugin.getLogger().warning("Paper Dialog API unavailable, falling back to chat-based dialog input");
+            return new FallBackDialogService(plugin);
         } catch (ReflectiveOperationException e) {
-            throw new IllegalStateException("Failed to construct PaperDialogService", e);
+            plugin.getLogger().severe("Failed to construct PaperDialogService, falling back to chat-based dialog input");
+            return new FallBackDialogService(plugin);
         }
     }
 }

@@ -17,3 +17,8 @@ order:
   collected: "&aHai raccolto {amount}x {item_name}"
   expired-refund: "&cIl tuo ordine è scaduto! Risarscito ${refund}"
   locked: "&cGli ordini sono attualmente in manutenzione"
+
+dialog:
+  hint: "&d{prompt} &7| scrivi in chat, oppure &c{cancel}&7 per annullare"
+  too-long: "&cTesto troppo lungo (massimo {max} caratteri)"
+  cancel-keyword: "annulla"
