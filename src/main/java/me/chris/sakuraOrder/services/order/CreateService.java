@@ -12,6 +12,7 @@ import me.chris.sakuraOrder.api.services.lang.LangService;
 import me.chris.sakuraOrder.api.services.order.OrderCreateService;
 import me.chris.sakuraOrder.api.services.order.result.CreateResult;
 import me.chris.sakuraOrder.api.services.order.result.CreateResult.FailureReason;
+import me.chris.sakuraOrder.api.model.WebhookEvent;
 import me.chris.sakuraOrder.util.NumberParser;
 import me.chris.sakuraOrder.util.OrderLimitResolver;
 import me.chris.sakuraOrder.util.OrderMaintenanceLock;
@@ -146,16 +147,23 @@ public class CreateService implements OrderCreateService {
                 SakuraOrder.getInstance().getSchedulerService().runNextTick(() -> {
                     new OrderCreateEvent(createdResult.order()).callEvent();
 
+                    String buyerName = Bukkit.getOfflinePlayer(order.getBuyerId()).getName();
+                    if (buyerName == null) buyerName = "Unknown";
+                    String itemName = StringUtil.formatMaterial(order.getItemStack());
+
                     if (plugin.getSettingsService().getGeneral().shouldBroadcast()) {
-                        String buyer_name = Bukkit.getOfflinePlayer(order.getBuyerId()).getName();
                         Bukkit.broadcast(lang.message("order.created-broadcast",
                                 Map.of(
-                                        "buyer_name", buyer_name != null ? buyer_name : "Unknown",
+                                        "buyer_name", buyerName,
                                         "amount", NumberParser.formatNumber(order.getAmount()),
-                                        "item_name", StringUtil.formatMaterial(order.getItemStack()),
+                                        "item_name", itemName,
                                         "price_each", NumberParser.formatNumber(order.getPricePerItem())
                                 )));
                     }
+
+                    plugin.getWebhookService().send(new WebhookEvent.OrderCreated(
+                            order.getId(), order.getBuyerId(), buyerName,
+                            itemName, order.getAmount(), order.getPricePerItem()));
 
                     Player player = Bukkit.getPlayer(order.getBuyerId());
                     if (player != null) {

@@ -1,0 +1,27 @@
+# Enables Discord webhook logging.
+enabled: false
+
+# Default webhook URL.
+# Used when an event does not define a custom URL.
+url: ""
+
+events:
+  order-create:
+    enabled: true
+    url: ""
+    color: "#57F287"
+
+  order-delivery:
+    enabled: true
+    url: ""
+    color: "#5865F2"
+
+  order-collect:
+    enabled: true
+    url: ""
+    color: "#FEE75C"
+
+  order-cancel:
+    enabled: true
+    url: ""
+    color: "#ED4245"

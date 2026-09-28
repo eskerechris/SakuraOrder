@@ -5,6 +5,7 @@ import me.chris.sakuraOrder.api.services.dialog.DialogService;
 import me.chris.sakuraOrder.api.services.economy.EconomyService;
 import me.chris.sakuraOrder.api.services.material.MaterialBlacklistService;
 import me.chris.sakuraOrder.api.services.sound.SoundService;
+import me.chris.sakuraOrder.api.services.webhook.WebhookService;
 import me.chris.sakuraOrder.menu.framework.Menu;
 import me.chris.sakuraOrder.menu.framework.MenuListener;
 import me.chris.sakuraOrder.api.persistence.OrderRepository;
@@ -21,7 +22,6 @@ import me.chris.sakuraOrder.services.lang.PluginLangService;
 import me.chris.sakuraOrder.services.gui.PluginGuiService;
 import me.chris.sakuraOrder.services.material.BlacklistService;
 import me.chris.sakuraOrder.services.order.*;
-import me.chris.sakuraOrder.services.order.*;
 import me.chris.sakuraOrder.services.scheduler.SchedulerService;
 import me.chris.sakuraOrder.services.sound.PluginSoundService;
 import me.chris.sakuraOrder.util.StartupBanner;
@@ -29,6 +29,7 @@ import com.tcoded.folialib.FoliaLib;
 import com.tcoded.folialib.wrapper.task.WrappedTask;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import me.chris.sakuraOrder.api.services.order.*;
+import me.chris.sakuraOrder.services.webhook.DiscordWebhookService;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -71,6 +72,7 @@ public final class SakuraOrder extends JavaPlugin implements OrderPlugin {
     private OrderHistoryService orderHistoryService;
     private DialogService dialogService;
     private SoundService soundService;
+    private WebhookService webhookService;
 
     private final AtomicBoolean shuttingDown = new AtomicBoolean(false);
     private final AtomicReference<CompletableFuture<Integer>> activeArchiveTask = new AtomicReference<>(CompletableFuture.completedFuture(0));
@@ -124,6 +126,7 @@ public final class SakuraOrder extends JavaPlugin implements OrderPlugin {
         this.orderHistoryService.start();
         this.dialogService = OrderDialogServiceFactory.create(this);
         this.soundService = new PluginSoundService(this, schedulerService);
+        this.webhookService = new DiscordWebhookService(this, schedulerService);
 
         // Archive terminal orders task
         archiveCompletedOrdersTaskHandle = this.schedulerService.runTimerAsync(
@@ -190,6 +193,9 @@ public final class SakuraOrder extends JavaPlugin implements OrderPlugin {
         // Unregister all event listeners cleanly
         HandlerList.unregisterAll(this);
 
+        // Close webhookservice
+        webhookService.close();
+
         // Cancel all task cleanly
         schedulerService.cancelAllTasks();
     }
@@ -253,6 +259,7 @@ public final class SakuraOrder extends JavaPlugin implements OrderPlugin {
         settingsService.reload();
         materialBlacklistService.reload();
         soundService.reload();
+        webhookService.reload();
         langService.reload();
     }
 
@@ -328,6 +335,11 @@ public final class SakuraOrder extends JavaPlugin implements OrderPlugin {
     @Override
     public @NotNull SoundService getSoundService() {
         return soundService;
+    }
+
+    @Override
+    public @NotNull WebhookService getWebhookService() {
+        return webhookService;
     }
 
     public static SakuraOrder getInstance() {

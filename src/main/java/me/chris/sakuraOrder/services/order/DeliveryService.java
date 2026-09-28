@@ -9,6 +9,7 @@ import me.chris.sakuraOrder.api.services.lang.LangService;
 import me.chris.sakuraOrder.api.services.order.OrderDeliveryService;
 import me.chris.sakuraOrder.api.services.order.result.DeliveryResult;
 import me.chris.sakuraOrder.api.services.order.result.DeliveryResult.FailureReason;
+import me.chris.sakuraOrder.api.model.WebhookEvent;
 import me.chris.sakuraOrder.util.DeliveryCalculator;
 import me.chris.sakuraOrder.util.NumberParser;
 import me.chris.sakuraOrder.util.OrderMaintenanceLock;
@@ -122,14 +123,20 @@ public class DeliveryService implements OrderDeliveryService {
         }
 
         String buyerName = Bukkit.getOfflinePlayer(updatedOrder.getBuyerId()).getName();
+        if (buyerName == null) buyerName = "Unknown";
+        String itemName = StringUtil.formatMaterial(updatedOrder.getItemStack());
 
         Map<String, String> placeholders = Map.of(
                 "amount", NumberParser.formatNumber(deliveredNow),
-                "item_name", StringUtil.formatMaterial(updatedOrder.getItemStack()),
-                "buyer_name", buyerName != null ? buyerName : "Unknown"
+                "item_name", itemName,
+                "buyer_name", buyerName
         );
 
         notifyBuyer(updatedOrder, deliveredNow, deliverer);
+
+        plugin.getWebhookService().send(new WebhookEvent.OrderDelivered(
+                updatedOrder.getId(), deliverer.getUniqueId(), deliverer.getName(),
+                updatedOrder.getBuyerId(), buyerName, itemName, deliveredNow, earned));
 
         DeliveryResult result =
                 (excessValid > 0 || !split.invalidStacks().isEmpty())

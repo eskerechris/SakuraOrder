@@ -69,7 +69,7 @@ public class OrderButton extends DynamicButton {
 
         if (clickType.isShiftClick() && parent instanceof OrderMenu) {
             if (player.hasPermission(REMOVE_PERMISSION)) {
-                plugin.getOrderCancelService().finalizeEarlyAsAdmin(orderId).thenAccept(result -> {
+                plugin.getOrderCancelService().finalizeEarlyAsAdmin(orderId, player.getName()).thenAccept(result -> {
                     if (result instanceof FinalizeResult.Success success) {
                         player.sendMessage(success.message());
                     } else if (result instanceof FinalizeResult.Failed failed) {

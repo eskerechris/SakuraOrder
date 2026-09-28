@@ -9,6 +9,7 @@ import me.chris.sakuraOrder.api.services.lang.LangService;
 import me.chris.sakuraOrder.api.services.material.MaterialBlacklistService;
 import me.chris.sakuraOrder.api.services.order.*;
 import me.chris.sakuraOrder.api.services.sound.SoundService;
+import me.chris.sakuraOrder.api.services.webhook.WebhookService;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
@@ -138,4 +139,12 @@ public interface OrderPlugin extends Plugin {
      */
     @NotNull
     SoundService getSoundService();
+
+    /**
+     * Gets the service responsible for sending webhook.
+     *
+     * @return the active {@link WebhookService} instance
+     */
+    @NotNull
+    WebhookService getWebhookService();
 }

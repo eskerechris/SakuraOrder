@@ -47,5 +47,5 @@ public interface OrderCancelService {
      * @return a future completed with the result of the finalization attempt
      */
     @NotNull
-    CompletableFuture<FinalizeResult> finalizeEarlyAsAdmin(@NotNull UUID orderId);
+    CompletableFuture<FinalizeResult> finalizeEarlyAsAdmin(@NotNull UUID orderId, @NotNull String adminName);
 }

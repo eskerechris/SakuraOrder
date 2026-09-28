@@ -9,9 +9,12 @@ import me.chris.sakuraOrder.api.services.order.OrderCacheService;
 import me.chris.sakuraOrder.api.services.order.OrderCancelService;
 import me.chris.sakuraOrder.api.services.order.OrderRefundService;
 import me.chris.sakuraOrder.api.services.order.result.FinalizeResult;
+import me.chris.sakuraOrder.api.model.WebhookEvent;
 import me.chris.sakuraOrder.util.NumberParser;
 import me.chris.sakuraOrder.util.OrderFinalization;
 import me.chris.sakuraOrder.util.OrderMaintenanceLock;
+import me.chris.sakuraOrder.util.StringUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -56,13 +59,13 @@ public class CancelService implements OrderCancelService {
                     )
             );
         }
-        return finalizeInternal(orderId, buyer.getUniqueId());
+        return finalizeInternal(orderId, buyer.getUniqueId(), buyer.getName());
     }
 
     @Override
     @NotNull
-    public CompletableFuture<FinalizeResult> finalizeEarlyAsAdmin(@NotNull UUID orderId) {
-        return finalizeInternal(orderId, null);
+    public CompletableFuture<FinalizeResult> finalizeEarlyAsAdmin(@NotNull UUID orderId, @NotNull String adminName) {
+        return finalizeInternal(orderId, null, adminName);
     }
 
     /**
@@ -71,12 +74,15 @@ public class CancelService implements OrderCancelService {
      * @param orderId the unique identifier of the order
      * @param requiredBuyerId the buyer required to own the order, or {@code null}
      *                       to skip the ownership check
+     * @param actorName the name of whoever requested the cancellation (player or admin),
+     *                  shown in webhook logs
      * @return a future completed with the finalization result
      */
     @NotNull
     private CompletableFuture<FinalizeResult> finalizeInternal(
             @NotNull UUID orderId,
-            @Nullable UUID requiredBuyerId
+            @Nullable UUID requiredBuyerId,
+            @NotNull String actorName
     ) {
         IOrder snapshot = cacheService.get(orderId);
         if (snapshot == null) {
@@ -122,7 +128,11 @@ public class CancelService implements OrderCancelService {
         IOrder updatedOrder = applied.order();
         long refundableAmount = applied.refundableAmount();
 
+        long originalAmount = snapshot.getAmount();
+        long delivered = originalAmount - refundableAmount;
+
         if (refundableAmount <= 0) {
+            notifyCancelled(updatedOrder, originalAmount, delivered, BigDecimal.ZERO, actorName);
             return CompletableFuture.completedFuture(
                     new FinalizeResult.Success(
                             updatedOrder,
@@ -135,15 +145,19 @@ public class CancelService implements OrderCancelService {
         BigDecimal refund = updatedOrder.getPricePerItem().multiply(BigDecimal.valueOf(refundableAmount));
 
         return refundService.refund(orderId, updatedOrder.getBuyerId(), refund)
-                .thenApply(ok -> ok
-                        ? new FinalizeResult.Success(
-                        updatedOrder,
-                        refund,
-                        lang.message("order.deleted",
-                                Map.of("refund", NumberParser.formatNumber(refund))))
-                        : new FinalizeResult.Failed(
-                        FinalizeResult.FailureReason.ECONOMY_ERROR,
-                        lang.message("order.refund-failed")));
+                .thenApply(ok -> {
+                    if (!ok) {
+                        return new FinalizeResult.Failed(
+                                FinalizeResult.FailureReason.ECONOMY_ERROR,
+                                lang.message("order.refund-failed"));
+                    }
+                    notifyCancelled(updatedOrder, originalAmount, delivered, refund, actorName);
+                    return new FinalizeResult.Success(
+                            updatedOrder,
+                            refund,
+                            lang.message("order.deleted",
+                                    Map.of("refund", NumberParser.formatNumber(refund))));
+                });
     }
 
     @NotNull
@@ -159,5 +173,21 @@ public class CancelService implements OrderCancelService {
         }
 
         return Objects.requireNonNull(outcome.value());
+    }
+
+    private void notifyCancelled(
+            @NotNull IOrder order,
+            long amount,
+            long delivered,
+            @NotNull BigDecimal refund,
+            @NotNull String cancelledBy
+    ) {
+        String buyerName = Bukkit.getOfflinePlayer(order.getBuyerId()).getName();
+        if (buyerName == null) buyerName = "Unknown";
+
+        plugin.getWebhookService().send(new WebhookEvent.OrderCancelled(
+                order.getId(), order.getBuyerId(), buyerName, cancelledBy,
+                StringUtil.formatMaterial(order.getItemStack()),
+                amount, delivered, refund));
     }
 }

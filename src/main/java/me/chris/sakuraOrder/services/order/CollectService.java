@@ -8,6 +8,7 @@ import me.chris.sakuraOrder.api.services.lang.LangService;
 import me.chris.sakuraOrder.api.services.order.OrderCollectService;
 import me.chris.sakuraOrder.api.services.order.result.CollectResult;
 import me.chris.sakuraOrder.api.services.order.result.CollectResult.FailureReason;
+import me.chris.sakuraOrder.api.model.WebhookEvent;
 import me.chris.sakuraOrder.util.NumberParser;
 import me.chris.sakuraOrder.util.OrderMaintenanceLock;
 import me.chris.sakuraOrder.util.StringUtil;
@@ -86,9 +87,15 @@ public class CollectService implements OrderCollectService {
         List<ItemStack> stacks = splitIntoStacks(updatedOrder.getItemStack(), collectedNow);
         giveOrDrop(collector, stacks, mode);
 
+        String itemName = StringUtil.formatMaterial(updatedOrder.getItemStack());
+
+        plugin.getWebhookService().send(new WebhookEvent.OrderCollected(
+                updatedOrder.getId(), collector.getUniqueId(), collector.getName(),
+                itemName, collectedNow));
+
         Map<String, String> placeholders = Map.of(
                 "amount", NumberParser.formatNumber(collectedNow),
-                "item_name", StringUtil.formatMaterial(updatedOrder.getItemStack())
+                "item_name", itemName
         );
 
         return CompletableFuture.completedFuture(
