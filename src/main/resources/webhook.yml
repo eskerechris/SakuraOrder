@@ -1,8 +1,21 @@
-# Enables Discord webhook logging.
+####################################################################################################
+# +----------------------------------------------------------------------------------------------+ #
+# |                                                                                              | #
+# |                            SAKURAORDER - DISCORD WEBHOOK LOGGING                             | #
+# |                                                                                              | #
+# |         Logs order events (create, delivery, collect, cancel) to a Discord channel.          | #
+# |                                                                                              | #
+# +----------------------------------------------------------------------------------------------+ #
+####################################################################################################
+
+# Master switch for Discord webhook logging.
+# When false, no event is ever sent, regardless of the settings below.
 enabled: false
 
-# Default webhook URL.
-# Used when an event does not define a custom URL.
+# Default webhook U L.
+# Used by any enabled event that leaves its own "url" empty.
+# Only https://discord.com/api/webhooks/... URLs are accepted.
+# Treat this URL as a secret: anyone who has it can post to your channel.
 url: ""
 
 events:
