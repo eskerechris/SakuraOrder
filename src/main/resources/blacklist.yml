@@ -1,13 +1,23 @@
-# Materials that must NOT appear in the ‘choose material’ menu when
-# creating an order. Use the material’s vanilla name (e.g. BEDROCK).
+####################################################################################################
+# +----------------------------------------------------------------------------------------------+ #
+# |                                                                                              | #
+# |                               SAKURAORDER - MATERIAL BLACKLIST                               | #
+# |                                                                                              | #
+# |          Materials excluded from the choose material menu when creating an order.            | #
+# |                                                                                              | #
+# +----------------------------------------------------------------------------------------------+ #
+####################################################################################################
+
+# Materials that must NOT appear in the choose material menu when
+# creating an order. Use the material's vanilla name (e.g. BEDROCK).
 #
-# You can also use “*” as a wildcard to block entire families of
+# You can also use "*" as a wildcard to block entire families of
 # materials in a single line, e.g.:
-#   *_SPAWN_EGG                 -> blocks all spawn eggs
-#   POTTED_*                    -> blocks all pots with plants
-#   *_MUSIC_DISC                -> blocks all music discs
-#   LINGERING_POTION:*          -> blocks all lingering potion
-#   POTION:STRENGTH             -> blocks strength potion
+#   *_SPAWN_EGG                  -> blocks all spawn eggs
+#   POTTED_*                     -> blocks all pots with plants
+#   *_MUSIC_DISC                 -> blocks all music discs
+#   LINGERING_POTION:*           -> blocks all lingering potions
+#   POTION:STRENGTH              -> blocks strength potion
 #   ENCHANTED_BOOK:SHARPNESS:5   -> blocks only the level 5 sharpness book
 blacklisted-materials:
   - "BEDROCK"
