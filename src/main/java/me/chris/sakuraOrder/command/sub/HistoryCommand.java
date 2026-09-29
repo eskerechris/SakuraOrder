@@ -8,12 +8,14 @@ import me.chris.sakuraOrder.command.SubCommand;
 import me.chris.sakuraOrder.menu.PlayerOrderHistoryMenu;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * Handles the {@code /order history} command.
@@ -31,7 +33,7 @@ public final class HistoryCommand implements SubCommand {
         return Commands.literal("history")
                 .requires(source -> source.getSender().hasPermission("sakuraorder.command.history"))
                 .then(
-                        Commands.argument("player", StringArgumentType.word())
+                        Commands.argument("player | uuid", StringArgumentType.word())
                                 .executes(this::execute)
                 );
     }
@@ -41,15 +43,26 @@ public final class HistoryCommand implements SubCommand {
             return 0;
         }
 
-        String playerName = StringArgumentType.getString(context, "player");
-        OfflinePlayer target = Bukkit.getOfflinePlayerIfCached(playerName);
+        String input = StringArgumentType.getString(context, "player | uuid");
+        OfflinePlayer target = resolveTarget(input);
 
-        if (target == null) {
-            player.sendMessage(Component.text("%s's history not found".formatted(playerName), NamedTextColor.RED));
+        if (target == null || !target.hasPlayedBefore()) {
+            player.sendMessage(plugin.getLangService().message("order.history-not-found",
+                    Map.of("player", input)));
             return 0;
         }
 
         new PlayerOrderHistoryMenu(plugin, target.getUniqueId()).displayTo(player);
         return 1;
+    }
+
+    @Nullable
+    private OfflinePlayer resolveTarget(@NotNull String input) {
+        try {
+            UUID uuid = UUID.fromString(input);
+            return Bukkit.getOfflinePlayer(uuid);
+        } catch (IllegalArgumentException e) {
+            return Bukkit.getOfflinePlayerIfCached(input);
+        }
     }
 }

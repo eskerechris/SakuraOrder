@@ -19,6 +19,7 @@ order:
   locked: "&cGli ordini sono attualmente in manutenzione"
   delivery-notifications-enabled: "&aHai attivato le notifiche di consegna in arrivo"
   delivery-notifications-disabled: "&cHai disattivato le notifiche di consegna in arrivo"
+  history-not-found: "&cCronologia ordini di {player} non trovata"
 
 dialog:
   hint: "&d{prompt} &7| scrivi in chat, oppure &c{cancel}&7 per annullare"

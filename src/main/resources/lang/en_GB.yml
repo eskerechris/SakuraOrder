@@ -19,6 +19,7 @@ order:
   locked: "&cOrders are currently under maintenance"
   delivery-notifications-enabled: "&aYou have enabled notifications for incoming deliveries"
   delivery-notifications-disabled: "&cYou have disabled notifications for incoming deliveries"
+  history-not-found: "&cOrder history of {player} not found"
 
 dialog:
   hint: "&d{prompt} &7| type in chat, or &c{cancel}&7 to cancel"
