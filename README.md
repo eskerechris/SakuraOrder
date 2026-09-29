@@ -11,6 +11,7 @@ marketplace flow
 - Search, filter, and sort in the order browser (`/order <search>` opens it pre-filtered)
 - Vault economy integration
 - Player order history
+- Discord webhook logging for order events (create, delivery, collect, cancel)
 - SQLite or MySQL/MariaDB storage
 - Folia-aware scheduling (region-based task handling, no cross-region violations)
 - Configurable per-player active order limits via permissions
@@ -36,6 +37,7 @@ marketplace flow
 | `/order` | Opens the marketplace menu |
 | `/order <search>` | Opens the marketplace menu pre-filtered by search |
 | `/order create` | Starts the order creation flow |
+| `/order togglenotifications` | Toggle order notification|
 | `/order history` | Shows players order history |
 | `/order admin` | Open the admin GUI |
 | `/order reload` | Reloads the plugin configuration |
