@@ -21,11 +21,9 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Handles order item deliveries and player-facing delivery effects.
@@ -34,6 +32,8 @@ public class DeliveryService implements OrderDeliveryService {
 
     private final OrderPlugin plugin;
     private final LangService lang;
+
+    private final Set<UUID> disabledNotificationBuyers = ConcurrentHashMap.newKeySet();
 
     public DeliveryService(@NotNull OrderPlugin plugin) {
         this.plugin = plugin;
@@ -155,6 +155,20 @@ public class DeliveryService implements OrderDeliveryService {
         return CompletableFuture.completedFuture(result);
     }
 
+    @Override
+    public boolean isNotificationEnabled(@NotNull UUID playerId) {
+        return !disabledNotificationBuyers.contains(playerId);
+    }
+
+    @Override
+    public boolean toggleNotification(@NotNull UUID playerId) {
+        if (!disabledNotificationBuyers.remove(playerId)) {
+            disabledNotificationBuyers.add(playerId);
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Applies the physical delivery effects on the deliverer's owning thread.
      *
@@ -210,6 +224,10 @@ public class DeliveryService implements OrderDeliveryService {
     private void notifyBuyer(@NotNull IOrder order, int deliveredNow, @NotNull Player deliverer) {
         Player buyer = Bukkit.getPlayer(order.getBuyerId());
         if (buyer == null || !buyer.isOnline()) {
+            return;
+        }
+
+        if (!isNotificationEnabled(buyer.getUniqueId())) {
             return;
         }
 

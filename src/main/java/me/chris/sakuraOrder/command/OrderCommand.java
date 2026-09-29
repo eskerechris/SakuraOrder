@@ -3,7 +3,6 @@ package me.chris.sakuraOrder.command;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import me.chris.sakuraOrder.api.OrderPlugin;
 import me.chris.sakuraOrder.command.sub.*;
-import me.chris.sakuraOrder.command.sub.*;
 import me.chris.sakuraOrder.menu.OrderMenu;
 import io.papermc.paper.command.brigadier.Commands;
 import net.kyori.adventure.text.Component;
@@ -26,6 +25,7 @@ public final class OrderCommand {
         this.subCommands = List.of(
                 new ReloadCommand(plugin),
                 new CreateCommand(plugin),
+                new ToggleNotificationCommand(plugin),
                 new HistoryCommand(plugin),
                 new LockCommand(),
                 new AdminCommand(plugin)

@@ -17,6 +17,8 @@ order:
   collected: "&aYou collected {amount}x {item_name}"
   expired-refund: "&cYour order has expired! Refunded ${refund}"
   locked: "&cOrders are currently under maintenance"
+  delivery-notifications-enabled: "&aYou have enabled notifications for incoming deliveries"
+  delivery-notifications-disabled: "&cYou have disabled notifications for incoming deliveries"
 
 dialog:
   hint: "&d{prompt} &7| type in chat, or &c{cancel}&7 to cancel"

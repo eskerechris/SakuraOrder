@@ -38,4 +38,20 @@ public interface OrderDeliveryService {
             @NotNull List<ItemStack> providedStacks,
             @NotNull Player deliverer
     );
+
+    /**
+     * Checks whether a player has delivery notifications enabled.
+     *
+     * @param playerId the unique identifier of the player
+     * @return {@code true} if delivery notifications are enabled, {@code false} otherwise
+     */
+    boolean isNotificationEnabled(@NotNull UUID playerId);
+
+    /**
+     * Toggles delivery notifications for a player.
+     *
+     * @param playerId the unique identifier of the player
+     * @return the new notification state ({@code true} if enabled, {@code false} if disabled)
+     */
+    boolean toggleNotification(@NotNull UUID playerId);
 }
